@@ -64,6 +64,9 @@ type TextFormatter struct {
 	// QuoteEmptyFields will wrap empty fields in quotes if true
 	QuoteEmptyFields bool
 
+	// Disables printing level
+	DisableLevel bool
+
 	// Whether the logger's out is to a terminal
 	isTerminal bool
 
@@ -196,6 +199,9 @@ func (f *TextFormatter) printColored(b *bytes.Buffer, entry *Entry, keys []strin
 	levelText := strings.ToUpper(entry.Level.String())
 	if !f.DisableLevelTruncation {
 		levelText = levelText[0:4]
+	}
+	if f.DisableLevel {
+		levelText = ""
 	}
 
 	// Remove a single newline if it already exists in the message to keep
